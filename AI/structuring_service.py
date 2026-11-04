@@ -1,5 +1,5 @@
 """
-HireSense AI Structuring Engine
+HireSense AI Structuring Engine - Milestone 2 Update
 Converts unstructured recruiter job descriptions into structured Job Requirement Profiles.
 Features:
 - OpenAI primary model (gpt-4o-mini)
