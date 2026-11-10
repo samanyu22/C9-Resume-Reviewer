@@ -1,3 +1,4 @@
+// Milestone 2: Candidate Resume Upload & Intake Component
 import { useState } from "react";
 import {
   FileText,
