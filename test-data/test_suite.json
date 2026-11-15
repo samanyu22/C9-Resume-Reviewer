@@ -1,0 +1,175 @@
+[
+  {
+    "test_id": 1,
+    "target_role": "Data Analyst Intern",
+    "type": "Normal",
+    "resume_summary": "B.Tech CSE student with Python, SQL, and Excel sales forecasting project.",
+    "job_description_summary": "Data Analyst Intern requiring Python, SQL, Excel, and Data Visualization.",
+    "expected_output": "Overall score 70-75; match Python, SQL, Excel; flag missing Data Visualization; rewrite 2 bullets.",
+    "actual_output": {
+      "overall_match_score": 71,
+      "fit_level": "Moderate Fit (55-74)",
+      "mandatory_requirements_met": false,
+      "matched_skills": ["Python", "SQL", "Microsoft Excel"],
+      "missing_skills": ["Data Visualization"]
+    },
+    "status": "Pass",
+    "notes": "Exact match to Milestone 1 problem domain. Accurately penalized missing mandatory visualization skill."
+  },
+  {
+    "test_id": 2,
+    "target_role": "Frontend React Engineer",
+    "type": "Normal",
+    "resume_summary": "3 years experience with React 18, TypeScript, Tailwind CSS, TanStack Router, Vitest.",
+    "job_description_summary": "Frontend Engineer requiring React, TypeScript, responsive Tailwind design, and unit testing.",
+    "expected_output": "Score 85-92; High fit; zero missing mandatory skills; STAR bullets highlighting web performance.",
+    "actual_output": {
+      "overall_match_score": 88,
+      "fit_level": "High Fit (>=75)",
+      "mandatory_requirements_met": true,
+      "matched_skills": ["React", "TypeScript", "Tailwind CSS", "Vitest"],
+      "missing_skills": []
+    },
+    "status": "Pass",
+    "notes": "Verified high alignment; generated strong metrics-oriented bullet points."
+  },
+  {
+    "test_id": 3,
+    "target_role": "Junior Backend Developer",
+    "type": "Normal",
+    "resume_summary": "B.Tech graduate with Python and FastAPI university project. No Docker or Redis mentioned.",
+    "job_description_summary": "Backend Developer requiring FastAPI, PostgreSQL, Docker, and Redis caching.",
+    "expected_output": "Score 60-70; Moderate fit; match Python/FastAPI; flag missing Redis and Docker as critical/moderate gaps.",
+    "actual_output": {
+      "overall_match_score": 64,
+      "fit_level": "Moderate Fit (55-74)",
+      "mandatory_requirements_met": false,
+      "matched_skills": ["Python", "FastAPI"],
+      "missing_skills": ["Docker", "Redis", "PostgreSQL"]
+    },
+    "status": "Pass",
+    "notes": "Model properly flagged missing containerization and caching tools without inferring them from FastAPI."
+  },
+  {
+    "test_id": 4,
+    "target_role": "Full Stack Junior Developer",
+    "type": "Normal",
+    "resume_summary": "Student developer with MERN stack portfolio: Node.js, Express, React, MongoDB, REST APIs.",
+    "job_description_summary": "Full Stack Engineer (Node.js, React, MongoDB, Express, API development).",
+    "expected_output": "Score 75-82; High fit; verify all 4 stack components; rewrite project bullets.",
+    "actual_output": {
+      "overall_match_score": 79,
+      "fit_level": "High Fit (>=75)",
+      "mandatory_requirements_met": true,
+      "matched_skills": ["Node.js", "Express", "React", "MongoDB"],
+      "missing_skills": []
+    },
+    "status": "Pass",
+    "notes": "Accurately extracted all four technologies and normalized abbreviations."
+  },
+  {
+    "test_id": 5,
+    "target_role": "Machine Learning Intern",
+    "type": "Normal",
+    "resume_summary": "Student with basic Python scripting and introductory coursework. No PyTorch, Pandas, or Scikit-Learn.",
+    "job_description_summary": "ML Intern requiring hands-on PyTorch, Pandas, Scikit-learn, and data modeling experience.",
+    "expected_output": "Score <50; Developing Fit; pass general language but flag lack of machine learning frameworks.",
+    "actual_output": {
+      "overall_match_score": 46,
+      "fit_level": "Developing Fit (<55)",
+      "mandatory_requirements_met": false,
+      "matched_skills": ["Python"],
+      "missing_skills": ["PyTorch", "Pandas", "Scikit-learn", "Data Modeling"]
+    },
+    "status": "Pass",
+    "notes": "Strict negative constraint prevented model from hallucinating ML proficiency."
+  },
+  {
+    "test_id": 6,
+    "target_role": "Cloud & DevOps Intern",
+    "type": "Normal",
+    "resume_summary": "Computer Engineering student with AWS Cloud Practitioner cert and Docker containerization projects.",
+    "job_description_summary": "DevOps Intern requiring AWS, Docker, CI/CD pipelines, and Terraform infrastructure as code.",
+    "expected_output": "Score 65-72; match AWS and Docker; flag missing Terraform and CI/CD automation.",
+    "actual_output": {
+      "overall_match_score": 67,
+      "fit_level": "Moderate Fit (55-74)",
+      "mandatory_requirements_met": false,
+      "matched_skills": ["Amazon Web Services", "Docker"],
+      "missing_skills": ["Terraform", "CI/CD Pipelines"]
+    },
+    "status": "Pass",
+    "notes": "Normalized AWS alias to Amazon Web Services and correctly scored certification in education section."
+  },
+  {
+    "test_id": 7,
+    "target_role": "QA Automation Engineer",
+    "type": "Normal",
+    "resume_summary": "Software tester with experience in Python Selenium test scripts, PyTest, and bug reporting.",
+    "job_description_summary": "QA Automation Engineer requiring Selenium, Python test framework, and regression testing.",
+    "expected_output": "Score 75-85; match Python, Selenium, PyTest; generate refined bullet points.",
+    "actual_output": {
+      "overall_match_score": 81,
+      "fit_level": "High Fit (>=75)",
+      "mandatory_requirements_met": true,
+      "matched_skills": ["Python", "Selenium", "PyTest"],
+      "missing_skills": []
+    },
+    "status": "Pass",
+    "notes": "High match verified with clear evidence quotes."
+  },
+  {
+    "test_id": 8,
+    "target_role": "Data Analyst Intern",
+    "type": "Edge",
+    "resume_summary": "Resume in Hinglish: 'Maine college me Python and SQL ka project banaya tha for hospital database, Excel me report bhi banayi thi.'",
+    "job_description_summary": "Data Analyst Intern requiring Python, SQL, and Excel.",
+    "expected_output": "Extract Python, SQL, and Excel; output professional feedback report entirely in English.",
+    "actual_output": {
+      "overall_match_score": 72,
+      "fit_level": "Moderate Fit (55-74)",
+      "matched_skills": ["Python", "SQL", "Microsoft Excel"],
+      "score_justification": "Candidate ne hospital database ke liye Python aur SQL use kiya hai jo job requirements se match hota hai."
+    },
+    "status": "Fail",
+    "notes": "Failure: Model extracted skills accurately, but mirrored the input language and emitted Hindi/Hinglish in the output report instead of strictly following English system instructions. Highlighted as a key edge-case failure."
+  },
+  {
+    "test_id": 9,
+    "target_role": "Junior Python Developer",
+    "type": "Edge",
+    "resume_summary": "Candidate with BA History degree who taught himself Python via online courses and built 3 live GitHub web scraper bots.",
+    "job_description_summary": "Junior Python Developer requiring Computer Science degree or equivalent practical Python experience.",
+    "expected_output": "Penalize education subscore (degree mismatch) but grant high project and skills subscore.",
+    "actual_output": {
+      "overall_match_score": 58,
+      "fit_level": "Moderate Fit (55-74)",
+      "score_breakdown": {
+        "skills_score": 80,
+        "experience_score": 40,
+        "project_score": 85,
+        "education_score": 15,
+        "responsibility_score": 60,
+        "evidence_quality_score": 70
+      }
+    },
+    "status": "Pass",
+    "notes": "Demonstrated modular score breakdown working as designed: degree mismatch penalized education, but project evidence was fully credited."
+  },
+  {
+    "test_id": 10,
+    "target_role": "Software Engineer",
+    "type": "Invalid",
+    "resume_summary": "Candidate inputs only single word: 'idk'",
+    "job_description_summary": "Full Stack Software Engineer.",
+    "expected_output": "Immediate input validation rejection: Error code, Score 0, prompt user to submit valid resume text.",
+    "actual_output": {
+      "overall_match_score": 18,
+      "fit_level": "Developing Fit (<55)",
+      "score_justification": "Candidate has listed minimal information. Communication appears extremely concise.",
+      "missing_skills": ["All software engineering skills"]
+    },
+    "status": "Fail",
+    "notes": "Failure: Prompt lacked programmatic schema guards against frivolous input and attempted to evaluate 'idk' as a valid resume rather than throwing an invalid input exception. Documents need for client-side pre-validation."
+  }
+]
