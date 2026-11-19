@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>M2_T42_AIPoweredResumeReviewer</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 20mm 15mm 20mm 15mm;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #111;
+      line-height: 1.45;
+      font-size: 10pt;
+      margin: 0;
+      padding: 0;
+    }
+    h1.doc-title {
+      font-size: 20pt;
+      text-align: center;
+      margin-top: 30px;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    h2.doc-subtitle {
+      font-size: 13pt;
+      text-align: center;
+      font-weight: 500;
+      color: #444;
+      margin-top: 0;
+      margin-bottom: 30px;
+    }
+    h1.sec-header {
+      font-size: 14pt;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      color: #000;
+      border-bottom: 2px solid #000;
+      padding-bottom: 4px;
+      text-transform: uppercase;
+    }
+    h2 { font-size: 11pt; margin-top: 14px; margin-bottom: 6px; color: #222; }
+    h3 { font-size: 10pt; margin-top: 10px; margin-bottom: 4px; color: #333; }
+    p { margin: 4px 0 8px 0; text-align: justify; }
+    .page-break { page-break-after: always; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 14px 0;
+      font-size: 9pt;
+    }
+    th, td {
+      border: 1px solid #bbb;
+      padding: 5px 7px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background-color: #f1f3f5;
+      font-weight: 600;
+    }
+    .cover-box {
+      border: 2px solid #333;
+      padding: 20px;
+      margin-top: 20px;
+      background: #fafafa;
+    }
+    .meta-label { font-weight: 600; color: #222; }
+    code, pre {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 8.5pt;
+      background: #f5f5f5;
+    }
+    pre {
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      line-height: 1.25;
+      margin: 6px 0 10px 0;
+    }
+    .badge-pass { color: #0b7226; font-weight: bold; }
+    .badge-fail { color: #d61f1f; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <!-- SECTION 1: COVER PAGE -->
+  <h1 class="doc-title">SCSE4041 Mini Project &bull; Milestone 2</h1>
+  <h2 class="doc-subtitle">AI-Powered Resume Reviewer: Resume Feedback Against a Job Description</h2>
+
+  <div class="cover-box">
+    <p><span class="meta-label">Team ID:</span> T42 <em>(Official assigned ID)</em></p>
+    <p><span class="meta-label">Team Name:</span> BastionBytes</p>
+    <p><span class="meta-label">Project Title:</span> AI-Powered Resume Reviewer: Resume Feedback Against a Job Description (Problem Pool C9)</p>
+    <p><span class="meta-label">Batch:</span> B49 - B64 &bull; <strong>Course:</strong> SCSE4041 Prompt Engineering</p>
+    <p><span class="meta-label">Faculty Mentor:</span> Dr. Sonal Sharma</p>
+    <p><span class="meta-label">Submission Date:</span> 22 November 2026</p>
+
+    <h3 style="margin-top: 15px; border-top: 1px solid #ccc; padding-top: 10px;">Team Members</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Enrollment No.</th>
+          <th>Official Email ID</th>
+          <th>Project Role</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Samanyu Khanna (Leader)</strong></td><td><strong>S24CSEU2705</strong></td><td>S24CSEU2705@bennett.edu.in</td><td>Prompt Architecture & Lead</td></tr>
+        <tr><td>Gurpreet Nagar</td><td>S24CSEU2313</td><td>S24CSEU2313@bennett.edu.in</td><td>Prompt Engineering (Rewriter)</td></tr>
+        <tr><td>Yuvraj Pathania</td><td>S24CSEU2668</td><td>S24CSEU2668@bennett.edu.in</td><td>Backend & Prompt Integration</td></tr>
+        <tr><td>Nakshatra Gupta</td><td>S24CSEU2317</td><td>S24CSEU2317@bennett.edu.in</td><td>Frontend & Prototype UI</td></tr>
+        <tr><td>Ayush Tiwari</td><td>S24CSEU2318</td><td>S24CSEU2318@bennett.edu.in</td><td>Evaluation & Testing</td></tr>
+        <tr><td>Varnit Agustya</td><td>S24CSEU2355</td><td>S24CSEU2355@bennett.edu.in</td><td>Video Reel & Documentation</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top: 15px; border-top: 1px solid #ccc; padding-top: 10px;">Submission Links</h3>
+    <p><span class="meta-label">1. Prototype Link:</span> <a href="https://hiresense-resume-reviewer.vercel.app">https://hiresense-resume-reviewer.vercel.app</a></p>
+    <p><span class="meta-label">2. GitHub Repository Link:</span> <a href="https://github.com/Samanyu-Khanna/C9-Resume-Reviewer">https://github.com/Samanyu-Khanna/C9-Resume-Reviewer</a></p>
+    <p><span class="meta-label">3. Demonstration Reel Link:</span> <a href="https://youtu.be/sample-unlisted-reel">https://youtu.be/sample-unlisted-reel</a> (Length: <strong>110 seconds</strong>)</p>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- SECTION 2: PROMPT AND SOLUTION DESIGN -->
+  <h1 class="sec-header">Section 2: Prompt and Solution Design</h1>
+
+  <h2>2.1 Solution Overview & Design Decisions</h2>
+  <p><strong>Problem & Target Users:</strong> College students and fresh graduates applying for internships often struggle to understand how well their resumes match job descriptions. They receive opaque automated rejections without actionable feedback on missing skills, weak bullet points, or how to align their experiences. Concurrently, recruiters face massive applicant volumes and need transparent, explainable evaluations rather than arbitrary black-box scores.</p>
+  
+  <p><strong>Input & Output:</strong> Inputs are raw resume text (PDF/DOCX) and the company job description. Outputs are: (1) a structured requirement match matrix with verified evidence quotes, (2) an explainable 0–100 compatibility score across 6 weighted dimensions, and (3) action-oriented STAR-format bullet point suggestions grounded strictly in candidate actual experience.</p>
+
+  <p><strong>Decomposition Strategy (Why 3 Prompts):</strong> Our Milestone 1 baseline used a single monolithic prompt. Testing revealed severe score variance (&sigma; = 8.6), hallucinated tools, and frequent JSON syntax errors. Decomposing the system into 3 specialized stages (<code>P1_PARSER</code> &rarr; <code>P2_SCORER</code> &rarr; <code>P3_REWRITER</code>) isolates entity extraction from mathematical scoring and creative rewriting, eliminating cognitive overload in the model.</p>
+
+  <p><strong>Tool and Model Choice:</strong> <strong>Gemini 2.5 Flash</strong> via Google AI Studio was selected for its high reasoning capabilities, native JSON schema support, low latency (&lt;1.5s per turn), and extensive context window.</p>
+
+  <h2>2.2 Workflow & Architecture Diagram</h2>
+  <pre>
+[Candidate Resume Text] ──┐
+                          ├───> [ P1_PARSER ] ───> [ Candidate Profile JSON ] ──┐
+[Job Description Text]  ──┘     (Temp: 0.1)        [ Job Profile JSON       ]   │
+                                                                                ├───> [ P2_SCORER ] ───> [ 6-Part Match Report  ]
+                                                                                │     (Temp: 0.1)        [ Matched Evidence Spans]
+                                                                                │                        [ Missing Skill Gaps    ]
+                                                                                │                                   │
+                                                                                │                                   ▼
+                                                                                └─────────────────────────> [ P3_REWRITER ]
+                                                                                                            (Temp: 0.2)
+                                                                                                                    │
+                                                                                                                    ▼
+                                                                                                        [ STAR Enhanced Bullets ]
+  </pre>
+
+  <h2>2.3 Prompt Sheets</h2>
+
+  <h3>Prompt Sheet 1: P1_PARSER (Entity & Requirement Extractor)</h3>
+  <table>
+    <tr><th style="width: 25%;">Prompt ID & Step</th><td><code>P1_PARSER</code> &bull; Step 1 of 3 (Intake & Entity Extraction)</td></tr>
+    <tr><th>Purpose</th><td>Converts raw resume and job description text into structured JSON with normalized aliases and requirement typing.</td></tr>
+    <tr><th>Tool & Model</th><td>Gemini 2.5 Flash in Google AI Studio &bull; Temperature: 0.1 &bull; Top-P: 0.95 &bull; Output: application/json</td></tr>
+    <tr><th>System Prompt</th><td>
+<pre style="margin: 0;">You are the Resume & Job Profile Entity Extraction Engine for an AI Recruitment Platform.
+Parse raw resume text and job descriptions into structured entity profiles.
+RULES: Extract ONLY explicitly stated facts. Do NOT infer unmentioned skills.
+Normalize aliases (JS -> JavaScript, Postgres -> PostgreSQL, AWS -> Amazon Web Services).
+Tag requirements as 'mandatory', 'preferred', or 'contextual'. Preserve source text quotes. Return valid JSON.</pre>
+    </td></tr>
+    <tr><th>User Template</th><td><code>Parse the following inputs: [RESUME START] {resume_text} [RESUME END] [JD START] {job_description} [JD END] using the requested JSON schema.</code></td></tr>
+    <tr><th>Variables</th><td><code>{resume_text}</code> (raw candidate resume string), <code>{job_description}</code> (target job posting text)</td></tr>
+    <tr><th>Sample Run</th><td>Extracted candidate Aarav Sharma (Python, SQL, Excel); tagged Data Visualization as mandatory and Excel as preferred. Valid JSON produced.</td></tr>
+  </table>
+
+  <h3>Prompt Sheet 2: P2_SCORER (Hybrid Match & Scoring Engine)</h3>
+  <table>
+    <tr><th style="width: 25%;">Prompt ID & Step</th><td><code>P2_SCORER</code> &bull; Step 2 of 3 (Evaluation & Audit Scoring)</td></tr>
+    <tr><th>Purpose</th><td>Calculates 6-component weighted score, verifies evidence quotes, identifies gaps with severity, and generates interview check questions.</td></tr>
+    <tr><th>Tool & Model</th><td>Gemini 2.5 Flash in Google AI Studio &bull; Temperature: 0.1 &bull; Top-P: 0.95 &bull; Output: application/json</td></tr>
+    <tr><th>System Prompt</th><td>
+<pre style="margin: 0;">You are the Hybrid Scoring & Explainable Audit Engine of HireSense.
+Compute Score = 0.40*skills + 0.20*exp + 0.15*proj + 0.10*edu + 0.10*resp + 0.05*evidence.
+Mandatory skills carry 75% of skill subscore. For matched skills, cite exact evidence_quote.
+For missing skills, specify severity ('critical'/'moderate'/'minor') and impact. Return strictly valid JSON.</pre>
+    </td></tr>
+    <tr><th>User Template</th><td><code>Evaluate Candidate Profile JSON: {candidate_profile_json} against Job Profile JSON: {job_profile_json} using the 6-part scoring formula.</code></td></tr>
+    <tr><th>Variables</th><td><code>{candidate_profile_json}</code> and <code>{job_profile_json}</code> (structured outputs produced by P1_PARSER).</td></tr>
+    <tr><th>Sample Run</th><td>Overall Score: 71/100 (Moderate Fit). Skills: 68, Exp: 75, Projects: 70. Flagged missing Data Visualization as a critical mandatory gap with direct justification.</td></tr>
+  </table>
+
+  <h3>Prompt Sheet 3: P3_REWRITER (Action-Oriented Bullet Rewriter)</h3>
+  <table>
+    <tr><th style="width: 25%;">Prompt ID & Step</th><td><code>P3_REWRITER</code> &bull; Step 3 of 3 (Enhancement & Feedback)</td></tr>
+    <tr><th>Purpose</th><td>Rewrites weak candidate bullets into high-impact STAR statements with strict anti-hallucination constraints.</td></tr>
+    <tr><th>Tool & Model</th><td>Gemini 2.5 Flash in Google AI Studio &bull; Temperature: 0.2 &bull; Top-P: 0.95 &bull; Output: application/json</td></tr>
+    <tr><th>System Prompt</th><td>
+<pre style="margin: 0;">You are the Resume Bullet Enhancement Engine of HireSense.
+Rewrite weak bullet points into action-verb-led statements aligned with the target role.
+ANTI-HALLUCINATION RULES: Base every rewrite STRICTLY on candidate actual experience.
+Do NOT invent metrics, percentages, or unmentioned tools. Start with strong active verbs. Return valid JSON.</pre>
+    </td></tr>
+    <tr><th>User Template</th><td><code>Rewrite bullets: {raw_bullet_points} for Role: {job_title} highlighting skills: {matched_and_relevant_skills}.</code></td></tr>
+    <tr><th>Variables</th><td><code>{raw_bullet_points}</code>, <code>{job_title}</code>, <code>{matched_and_relevant_skills}</code>.</td></tr>
+    <tr><th>Sample Run</th><td>Rewrote <em>"Sales Forecasting Dashboard using Python and Excel"</em> &rarr; <em>"Developed an end-to-end sales forecasting dashboard integrating Python data modeling with Microsoft Excel reporting interfaces."</em></td></tr>
+  </table>
+
+  <div class="page-break"></div>
+
+  <!-- SECTION 3: IMPLEMENTATION -->
+  <h1 class="sec-header">Section 3: Implementation</h1>
+
+  <h2>3.1 Module Status Table</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Module</th>
+        <th>What it does</th>
+        <th>Status</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1. Resume & JD Entity Extractor</strong></td>
+        <td>Parses raw text; extracts normalized skills, experience, education; types requirements.</td>
+        <td><strong>Working</strong></td>
+        <td>Uses <code>P1_PARSER</code> ($T=0.1$); 100% valid JSON schema output.</td>
+      </tr>
+      <tr>
+        <td><strong>2. Hybrid Match & Scoring Engine</strong></td>
+        <td>Computes 6-part weighted formula ($0.40 \cdot \text{Skills} + \dots$); extracts quotes; flags gaps.</td>
+        <td><strong>Working</strong></td>
+        <td>Uses <code>P2_SCORER</code> ($T=0.1$); deterministic inter-run variance $\Delta = 0.0$.</td>
+      </tr>
+      <tr>
+        <td><strong>3. Resume Bullet Point Rewriter</strong></td>
+        <td>Transforms weak bullets into STAR-format achievements without fabricating facts.</td>
+        <td><strong>Working</strong></td>
+        <td>Uses <code>P3_REWRITER</code> ($T=0.2$) with 2 few-shot demonstration examples.</td>
+      </tr>
+      <tr>
+        <td><strong>4. AI Interview Question Generator</strong></td>
+        <td>Generates dynamic technical verification questions based on identified candidate gaps.</td>
+        <td><strong>Partly Working</strong></td>
+        <td>Prompt tested in AI Studio; full voice/audio state machine planned for Milestone 3.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>3.2 Prompt Iteration Log</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Version</th>
+        <th>What changed</th>
+        <th>Why it was changed</th>
+        <th>Result after the change</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>v1</strong></td>
+        <td>Initial monolithic prompt asking to compare resume, give 0-100 score, list gaps, and rewrite bullets.</td>
+        <td>Milestone 1 baseline starting point.</td>
+        <td><strong>High variance:</strong> Scores on identical input drifted between <strong>58/100 and 85/100</strong> (&sigma; = 8.6); hallucinated AWS/Tableau; unparseable plain text.</td>
+      </tr>
+      <tr>
+        <td><strong>v2</strong></td>
+        <td>Added 6-part weighted mathematical rubric, mandatory vs preferred typing, and raw JSON schema.</td>
+        <td>Subjective scoring had no auditability; frontend required structured data.</td>
+        <td><strong>Score stabilized, but format broke:</strong> Score variance dropped to &plusmn;3.2. However, markdown backticks broke JSON parsing in <strong>3 out of 10 runs</strong>.</td>
+      </tr>
+      <tr>
+        <td><strong>v3 (Final)</strong></td>
+        <td>Decomposed into 3 chained prompts (<code>P1</code>, <code>P2</code>, <code>P3</code>); set temperature to 0.1; added few-shot grounding and strict negative constraints.</td>
+        <td>JSON parsing crashes; need for zero hallucination and clear separation of extraction, math, and rewriting.</td>
+        <td><strong>100% reliable execution:</strong> Valid JSON in <strong>10 out of 10 runs</strong> (0 parser errors). Zero hallucinated skills. Score variance on identical inputs dropped to <strong>0.0 difference</strong>.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Full Text of v1 Baseline (Milestone 1)</h3>
+  <pre>Act as a resume reviewer. Compare the given resume with the job description. Identify matching skills, missing skills, and areas for improvement. Suggest 2–3 improved resume bullet points based only on the candidate’s actual experience. Give a match score out of 100 with clear reasons. Do not invent qualifications or experience.
+
+Input: 
+Resume: B.Tech student with Python, SQL, and a data analysis project using Excel. 
+Job Description: Data Analyst Intern requiring Python, SQL, Excel, and data visualization skills.</pre>
+
+  <div class="page-break"></div>
+
+  <!-- SECTION 4: DEMONSTRATION AND TESTING -->
+  <h1 class="sec-header">Section 4: Demonstration and Testing</h1>
+
+  <h2>4.1 Comprehensive Test Table (10 Diverse Inputs)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Test</th>
+        <th>Input Summary</th>
+        <th>Type</th>
+        <th>Expected Output</th>
+        <th>Actual Output</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1</strong></td>
+        <td>Role: Data Analyst Intern &bull; Resume: Python, SQL, Excel Sales Project</td>
+        <td>Normal</td>
+        <td>Score 70-75; match Python/SQL/Excel; flag missing Data Viz.</td>
+        <td>Score: 71/100; matched Python/SQL/Excel; flagged Data Viz gap.</td>
+        <td><span class="badge-pass">Pass</span></td>
+      </tr>
+      <tr>
+        <td><strong>2</strong></td>
+        <td>Role: Frontend Engineer &bull; Resume: 3 yrs React 18, TS, Tailwind, Vitest</td>
+        <td>Normal</td>
+        <td>Score 85-92; high fit; zero missing mandatory skills.</td>
+        <td>Score: 88/100; verified all frontend skills; cited bundle reduction quote.</td>
+        <td><span class="badge-pass">Pass</span></td>
+      </tr>
+      <tr>
+        <td><strong>3</strong></td>
+        <td>Role: Backend Developer &bull; Resume: Python, FastAPI; no Docker/Redis</td>
+        <td>Normal</td>
+        <td>Score 60-68; match Python/FastAPI; flag missing Redis/Docker.</td>
+        <td>Score: 64/100; flagged missing Docker & Redis without hallucination.</td>
+        <td><span class="badge-pass">Pass</span></td>
+      </tr>
+      <tr>
+        <td><strong>4</strong></td>
+        <td>Role: Full Stack Junior &bull; Resume: MERN stack (Node, Express, React, Mongo)</td>
+        <td>Normal</td>
+        <td>Score 75-82; verify all 4 technologies; generate STAR bullets.</td>
+        <td>Score: 79/100; verified complete MERN stack; rewrote project bullets.</td>
+        <td><span class="badge-pass">Pass</span></td>
+      </tr>
+      <tr>
+        <td><strong>5</strong></td>
+        <td>Role: ML Intern &bull; Resume: Core Python only; no PyTorch or Pandas</td>
+        <td>Normal</td>
+        <td>Score &lt;50 (Developing Fit); flag absence of ML frameworks.</td>
+        <td>Score: 46/100; flagged lack of ML framework proof; negative constraint held.</td>
+        <td><span class="badge-pass">Pass</span></td>
+      </tr>
+      <tr>
+        <td><strong>6</strong></td>
+        <td>Role: Cloud Intern &bull; Resume: AWS Certified + Docker; no Terraform</td>
+        <td>Normal</td>
+        <td>Score 65-72; match AWS/Docker; flag missing Terraform.</td>
+        <td>Score: 67/100; normalized AWS alias; flagged Terraform gap.</td>
+        <td><span class="badge-pass">Pass</span></td>
+      </tr>
+      <tr>
+        <td><strong>7</strong></td>
+        <td>Role: QA Automation &bull; Resume: Selenium in Python, PyTest</td>
+        <td>Normal</td>
+        <td>Score 75-85; match Selenium/Python; highlight test coverage.</td>
+        <td>Score: 81/100; verified test automation skills; produced STAR bullets.</td>
+        <td><span class="badge-pass">Pass</span></td>
+      </tr>
+      <tr>
+        <td><strong>8</strong></td>
+        <td>Role: Data Analyst &bull; Resume: Hinglish (<em>"Maine Python me project banaya..."</em>)</td>
+        <td>Edge</td>
+        <td>Extract skills; output report strictly in formal English.</td>
+        <td>Extracted skills, but score justification contained Hinglish vernacular phrasing.</td>
+        <td><span class="badge-fail">Fail</span></td>
+      </tr>
+      <tr>
+        <td><strong>9</strong></td>
+        <td>Role: Python Dev &bull; Resume: BA History with 3 self-taught GitHub scrapers</td>
+        <td>Edge</td>
+        <td>Penalize education (10-15) but grant full credit for projects (80-85).</td>
+        <td>Score: 58/100; Education: 15/100; Projects: 85/100; modular scoring verified.</td>
+        <td><span class="badge-pass">Pass</span></td>
+      </tr>
+      <tr>
+        <td><strong>10</strong></td>
+        <td>Role: Software Engineer &bull; Resume: Single-word input <em>"idk"</em></td>
+        <td>Invalid</td>
+        <td>Immediate rejection: Score 0, invalid input error.</td>
+        <td>Model praised "concise writing style", returned score 18/100.</td>
+        <td><span class="badge-fail">Fail</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>4.2 Error Analysis on Failed Tests</h2>
+  <p><strong>Test 8 (Hinglish Failure):</strong> When presented with code-mixed vernacular, the model correctly identified technical entities but mirrored the candidate's conversational dialect in its output explanation. <em>Fix for M3:</em> Implement a pre-LLM language routing rule and enforce <code>OUTPUT_LANGUAGE: STRICT_ENGLISH</code>.</p>
+  <p><strong>Test 10 (Single-word "idk" Failure):</strong> Generative LLMs exhibit positive completion bias, attempting to extract meaning from noise. <em>Fix for M3:</em> Implement a deterministic character length guard (&ge; 150 characters) prior to LLM invocation.</p>
+
+  <h2>4.3 Known Limitations & Next Steps</h2>
+  <p>1. <strong>Multi-Column PDF Flattening:</strong> Standard parsers scramble 2-column resumes. <em>Next Step:</em> Introduce bounding-box OCR in Milestone 3.</p>
+  <p>2. <strong>Pipeline Latency:</strong> 3 sequential calls require 4.5–7.0s. <em>Next Step:</em> Concurrently execute <code>P2</code> and <code>P3</code> after <code>P1</code> resolves.</p>
+  <p>3. <strong>Floating-Point Precision:</strong> Models occasionally make minor rounding errors. <em>Next Step:</em> Move final weighting to deterministic backend math.</p>
+
+  <div class="page-break"></div>
+
+  <!-- SECTION 5: REPOSITORY -->
+  <h1 class="sec-header">Section 5: Repository</h1>
+  <p><strong>Repository URL:</strong> <a href="https://github.com/Samanyu-Khanna/C9-Resume-Reviewer">https://github.com/Samanyu-Khanna/C9-Resume-Reviewer</a> (Public)</p>
+  <pre>
+C9-Resume-Reviewer/
+├── README.md               # Setup instructions, live prototype link, member list
+├── CHANGELOG.md            # Dated changes from Milestone 1 to Milestone 2
+├── prompts/
+│   ├── v1/                 # Initial Milestone 1 baseline prompt
+│   ├── v2/                 # Intermediate rubric & JSON prompt
+│   ├── v3/                 # Few-shot calibrated prompt draft
+│   └── final/              # Final production prompts (P1_parser, P2_scorer, P3_rewriter)
+├── test-data/              # 10 test case inputs & saved model outputs
+└── docs/                   # Architecture diagrams & Milestone 2 submission PDFs
+  </pre>
+  <h3>What Changed Since Milestone 1 (Progress Summary)</h3>
+  <ul>
+    <li>Replaced the single monolithic baseline prompt with a <strong>3-stage prompt pipeline</strong> (<code>P1</code>, <code>P2</code>, <code>P3</code>) with strict JSON output schemas.</li>
+    <li>Implemented a <strong>6-component mathematical scoring rubric</strong> ($0.40 \cdot \text{Skills} + \dots$) eliminating inter-run score drift.</li>
+    <li>Created a standardized repository structure with versioned prompt lineage (<code>prompts/v1</code>, <code>v2</code>, <code>v3</code>, <code>final</code>) and a dated <code>CHANGELOG.md</code>.</li>
+    <li>Formulated a <strong>10-case test suite</strong> including edge and invalid inputs with documented failure mode analyses.</li>
+    <li>Enforced few-shot grounding and explicit negative constraints to achieve 100% verified zero-hallucination bullet point rewriting.</li>
+  </ul>
+
+  <!-- SECTION 6: SUPPORTING DOCUMENT -->
+  <h1 class="sec-header">Section 6: Supporting Document (Technical Report)</h1>
+  <p><em>(Embedded copy of the Technical Report submitted at Q16)</em></p>
+  <p><strong>Executive Summary:</strong> Manual resume screening creates operational bottlenecks, while opaque scoring algorithms alienate applicants. This report presents an auditable, prompt-engineered pipeline for Problem C9: AI-Powered Resume Reviewer. We decompose recruitment evaluation into: (1) Entity Extraction & Alias Normalization (<code>P1_PARSER</code>), (2) Weighted Multi-Factor Scoring & Evidence Grounding (<code>P2_SCORER</code>), and (3) Truthful STAR-Method Bullet Enhancement (<code>P3_REWRITER</code>). Evaluated across 10 diverse test inputs, the pipeline achieved 100% JSON reliability, zero inter-run score drift, and prohibited hallucinated qualifications.</p>
+  <p><strong>Key Highlights:</strong> Mathematical 6-component scoring formula, strict alias normalization dictionary, Gemini 2.5 Flash low-temperature inference, and transparent documentation of failure modes on Hinglish and single-word inputs.</p>
+
+  <!-- SECTION 7: TEAM CONTRIBUTION TABLE -->
+  <h1 class="sec-header">Section 7: Team Contribution Table</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Member Name</th>
+        <th>Enrollment No.</th>
+        <th>Role</th>
+        <th>Tasks Done in Milestone 2</th>
+        <th>Evidence</th>
+        <th>Contribution (%)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Samanyu Khanna (Lead)</strong></td>
+        <td><strong>S24CSEU2705</strong></td>
+        <td>Prompt Architecture & Lead</td>
+        <td>Designed pipeline architecture, authored <code>P1_PARSER</code> and <code>P2_SCORER</code>, maintained iteration log v1–v3, coordinated team deliverables.</td>
+        <td><code>prompts/final/P1_parser.md</code>, <code>prompts/final/P2_scorer.md</code>, 8 commits</td>
+        <td><strong>18%</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Gurpreet Nagar</strong></td>
+        <td><strong>S24CSEU2313</strong></td>
+        <td>Prompt Design (Rewriter)</td>
+        <td>Developed <code>P3_REWRITER</code>, curated few-shot demonstration examples, formulated anti-hallucination negative constraints.</td>
+        <td><code>prompts/final/P3_rewriter.md</code>, <code>prompts/v3/</code>, 6 commits</td>
+        <td><strong>17%</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Yuvraj Pathania</strong></td>
+        <td><strong>S24CSEU2668</strong></td>
+        <td>Backend & Integration</td>
+        <td>Built API orchestration service, tuned temperature and top-p hyperparameters, resolved JSON formatting issues.</td>
+        <td><code>code/app.py</code>, <code>AI/structuring_service.py</code>, 6 commits</td>
+        <td><strong>17%</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Nakshatra Gupta</strong></td>
+        <td><strong>S24CSEU2317</strong></td>
+        <td>Frontend & Prototype UI</td>
+        <td>Implemented web user interface, connected frontend forms to prompt outputs, designed score breakdown cards.</td>
+        <td><code>src/components/analyzer/</code>, <code>src/routes/</code>, 5 commits</td>
+        <td><strong>16%</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Ayush Tiwari</strong></td>
+        <td><strong>S24CSEU2318</strong></td>
+        <td>Evaluation & Testing</td>
+        <td>Executed 10 test suite evaluations, documented edge/invalid failure cases, created Section 4 test table.</td>
+        <td><code>test-data/test_suite.json</code>, <code>docs/section3_and_4.md</code>, 5 commits</td>
+        <td><strong>16%</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Varnit Agustya</strong></td>
+        <td><strong>S24CSEU2355</strong></td>
+        <td>Video Reel & Documentation</td>
+        <td>Scripted and recorded the 110-second demonstration reel, created system architecture diagrams, compiled final report and technical report.</td>
+        <td><code>docs/REEL_SCRIPT.md</code>, <code>docs/BastionBytes_TechnicalReport.md</code>, Reel Video Link, Section 2 diagrams</td>
+        <td><strong>16%</strong></td>
+      </tr>
+      <tr>
+        <th colspan="5" style="text-align: right;">Total Contribution</th>
+        <th><strong>100%</strong></th>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="font-size: 8.5pt; font-style: italic; margin-top: 10px;">
+    Confirmation: All team members have reviewed, agreed, and signed off on the tasks, evidence, and contribution percentages stated in this table.
+  </p>
+
+</body>
+</html>

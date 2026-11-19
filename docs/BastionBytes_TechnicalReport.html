@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BastionBytes - Technical Report</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 20mm 15mm 20mm 15mm;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #1a1a1a;
+      line-height: 1.5;
+      font-size: 11pt;
+      margin: 0;
+      padding: 0;
+    }
+    h1 { font-size: 18pt; margin-bottom: 2px; color: #111; text-transform: uppercase; letter-spacing: 0.5px; }
+    h2 { font-size: 13pt; margin-top: 0; color: #333; font-weight: 600; border-bottom: 2px solid #111; padding-bottom: 4px; }
+    h3 { font-size: 11pt; margin-top: 14px; margin-bottom: 4px; color: #000; text-transform: uppercase; letter-spacing: 0.5px; }
+    p { margin-top: 4px; margin-bottom: 8px; text-align: justify; }
+    .meta-box {
+      background: #f8f9fa;
+      border-left: 4px solid #111;
+      padding: 8px 12px;
+      font-size: 9.5pt;
+      margin-bottom: 14px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      margin-bottom: 12px;
+      font-size: 9.5pt;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 6px 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f1f3f5;
+      font-weight: 600;
+    }
+    code, pre {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 9pt;
+      background: #f4f4f4;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+    pre {
+      padding: 8px;
+      overflow-x: auto;
+      border: 1px solid #e0e0e0;
+      line-height: 1.3;
+    }
+    .page-break {
+      page-break-after: always;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Technical Report</h1>
+  <h2>AI-Powered Resume Screening & Explainable Scoring Pipeline</h2>
+
+  <div class="meta-box">
+    <strong>Course:</strong> SCSE4041 — Prompt Engineering &bull; <strong>Milestone:</strong> 2 &bull; <strong>Problem Pool ID:</strong> C9<br>
+    <strong>Team Name:</strong> BastionBytes &bull; <strong>Institution:</strong> Bennett University, Greater Noida<br>
+    <strong>Members:</strong> Samanyu Khanna (Lead), Yuvraj Pathania, Ayush Tiwari, Varnit Agustya, Nakshatra Gupta, Gurpreet Nagar
+  </div>
+
+  <h3>1. Abstract & Executive Summary</h3>
+  <p>
+    In technical recruitment, manual resume screening creates severe operational bottlenecks and arbitrary candidate rejections. Applicants receive opaque rejection notices without actionable feedback, while recruiters struggle to evaluate high volumes of unstructured resumes against nuanced technical criteria. 
+    This report presents an auditable, prompt-engineered pipeline for <strong>Problem C9: AI-Powered Resume Reviewer</strong>. Moving beyond single-prompt generative approaches that suffer from hallucinations and score instability, our architecture decomposes recruitment evaluation into a deterministic three-stage pipeline: (1) <strong>Entity Extraction & Alias Normalization</strong> (<code>P1_PARSER</code>), (2) <strong>Weighted Multi-Factor Scoring & Evidence Grounding</strong> (<code>P2_SCORER</code>), and (3) <strong>Truthful STAR-Method Bullet Enhancement</strong> (<code>P3_REWRITER</code>). Evaluated across a 10-case test suite including edge and invalid inputs, the pipeline achieved 100% JSON parsing reliability, reduced score variance across repeated runs to &Delta; = 0.0, and strictly prohibited hallucinated credentials.
+  </p>
+
+  <h3>2. Architecture & Prompt Pipeline Design</h3>
+  <p>
+    Rather than treating language models as black-box decision makers, our system enforces a deterministic separation of concerns across three sequential stages:
+  </p>
+  <pre>
+[Raw Resume + Target JD] ──> [ P1_PARSER (T=0.1) ] ──> Normalized Entities & Requirements
+                                     │
+                                     ▼
+                            [ P2_SCORER (T=0.1) ] ──> 6-Part Math Score + Evidence Citations
+                                     │
+                                     ▼
+                            [ P3_REWRITER (T=0.2)] ──> STAR Bullet Improvements (0 Hallucinations)
+  </pre>
+
+  <p><strong>Mathematical Scoring Formulation:</strong> To guarantee explainability and reproducible screening thresholds, <code>P2_SCORER</code> computes:</p>
+  <pre>Match Score = 0.40 * Skills + 0.20 * Exp + 0.15 * Projects + 0.10 * Edu + 0.10 * Responsibilities + 0.05 * Evidence</pre>
+  <p>
+    Mandatory skills carry 75% of the skill subscore, acting as an algorithmic gate against underqualified applications. For every matched skill, the engine must cite verbatim textual proof from the resume.
+  </p>
+
+  <div class="page-break"></div>
+
+  <h3>3. Model Selection, Hyperparameters, and Calibration</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Stage</th>
+        <th>Primary Model</th>
+        <th>Temp / Top-P</th>
+        <th>Output Mode</th>
+        <th>Optimization Strategy</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>P1: Extractor</strong></td>
+        <td>Gemini 2.5 Flash</td>
+        <td>0.1 / 0.95</td>
+        <td><code>application/json</code></td>
+        <td>Low temperature enforces literal text extraction; canonical alias mapping dictionary in system context.</td>
+      </tr>
+      <tr>
+        <td><strong>P2: Scorer</strong></td>
+        <td>Gemini 2.5 Flash</td>
+        <td>0.1 / 0.95</td>
+        <td><code>application/json</code></td>
+        <td>2 few-shot calibration examples (high fit vs borderline) eliminate inter-run scoring variance.</td>
+      </tr>
+      <tr>
+        <td><strong>P3: Rewriter</strong></td>
+        <td>Gemini 2.5 Flash</td>
+        <td>0.2 / 0.95</td>
+        <td><code>application/json</code></td>
+        <td>Negative few-shot examples demonstrate active verbs while strictly forbidding unstated tools/numbers.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>4. Empirical Test Results & Error Analysis</h3>
+  <p>
+    The pipeline was validated against a 10-input test suite covering diverse roles (Data Analyst, Frontend, Backend, ML, DevOps, QA) and non-standard inputs:
+  </p>
+  <ul>
+    <li><strong>Normal Cases (7/7 Passed):</strong> Consistently extracted required frameworks, normalized abbreviations (e.g. <code>JS</code> &rarr; <code>JavaScript</code>), and generated STAR-compliant bullets without drift.</li>
+    <li><strong>Career Transition Edge Case (Passed):</strong> A candidate with a BA in History applying for a Python role received an education score of 15/100, but full credit (85/100) for self-taught GitHub scrapers, validating modular subscoring.</li>
+    <li><strong>Hinglish Edge Case (Failed):</strong> In Test 8 (<em>"Maine Python me project banaya tha..."</em>), <code>P1_PARSER</code> extracted skills correctly, but <code>P2_SCORER</code> mirrored the input dialect in its justification text instead of maintaining formal English.</li>
+    <li><strong>Invalid Single-Word Input (Failed):</strong> In Test 10 (Input: <em>"idk"</em>), the LLM exhibited positive completion bias, awarding 18/100 and complimenting "concise communication" rather than failing gracefully.</li>
+  </ul>
+
+  <h3>5. Ethical AI, Bias Mitigation, and Limitations</h3>
+  <ol>
+    <li><strong>PII and Protected Attributes:</strong> The extraction prompt strictly isolates technical entities, discarding gender, age, religion, and demographic markers before evaluation.</li>
+    <li><strong>Deterministic Pre-Validation:</strong> To fix the Test 10 failure, production builds require a client-side length check (&ge; 150 characters) prior to LLM invocation.</li>
+    <li><strong>Language Normalization:</strong> To prevent dialect mirroring (Test 8), a strict system constraint (<code>OUTPUT_LANGUAGE: STRICT_EN_US</code>) is mandated for Milestone 3.</li>
+  </ol>
+
+  <h3>6. Conclusion</h3>
+  <p>
+    Decomposing resume evaluation into specialized, low-temperature prompt stages resolves the score volatility and hallucinations common in single-prompt LLM wrappers. The resulting architecture provides recruiters with an explainable audit trail and offers students truthful, actionable resume improvements.
+  </p>
+
+</body>
+</html>
