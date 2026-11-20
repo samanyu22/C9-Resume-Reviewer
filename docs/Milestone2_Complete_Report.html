@@ -121,8 +121,8 @@
     </table>
 
     <h3 style="margin-top: 15px; border-top: 1px solid #ccc; padding-top: 10px;">Submission Links</h3>
-    <p><span class="meta-label">1. Prototype Link:</span> <a href="https://hiresense-resume-reviewer.vercel.app">https://hiresense-resume-reviewer.vercel.app</a></p>
-    <p><span class="meta-label">2. GitHub Repository Link:</span> <a href="https://github.com/Samanyu-Khanna/C9-Resume-Reviewer">https://github.com/Samanyu-Khanna/C9-Resume-Reviewer</a></p>
+    <p><span class="meta-label">1. Prototype Link:</span> <a href="https://github.com/samanyu22/C9-Resume-Reviewer">https://github.com/samanyu22/C9-Resume-Reviewer</a></p>
+    <p><span class="meta-label">2. GitHub Repository Link:</span> <a href="https://github.com/samanyu22/C9-Resume-Reviewer">https://github.com/samanyu22/C9-Resume-Reviewer</a></p>
     <p><span class="meta-label">3. Demonstration Reel Link:</span> <a href="https://youtu.be/sample-unlisted-reel">https://youtu.be/sample-unlisted-reel</a> (Length: <strong>110 seconds</strong>)</p>
   </div>
 
@@ -404,7 +404,7 @@ Job Description: Data Analyst Intern requiring Python, SQL, Excel, and data visu
 
   <!-- SECTION 5: REPOSITORY -->
   <h1 class="sec-header">Section 5: Repository</h1>
-  <p><strong>Repository URL:</strong> <a href="https://github.com/Samanyu-Khanna/C9-Resume-Reviewer">https://github.com/Samanyu-Khanna/C9-Resume-Reviewer</a> (Public)</p>
+  <p><strong>Repository URL:</strong> <a href="https://github.com/samanyu22/C9-Resume-Reviewer">https://github.com/samanyu22/C9-Resume-Reviewer</a> (Public)</p>
   <pre>
 C9-Resume-Reviewer/
 ├── README.md               # Setup instructions, live prototype link, member list
@@ -441,7 +441,7 @@ C9-Resume-Reviewer/
         <th>Enrollment No.</th>
         <th>Role</th>
         <th>Tasks Done in Milestone 2</th>
-        <th>Evidence</th>
+        <th>Evidence (Files, Commits, Prompt IDs)</th>
         <th>Contribution (%)</th>
       </tr>
     </thead>
@@ -450,48 +450,48 @@ C9-Resume-Reviewer/
         <td><strong>Samanyu Khanna (Lead)</strong></td>
         <td><strong>S24CSEU2705</strong></td>
         <td>Prompt Architecture & Lead</td>
-        <td>Designed pipeline architecture, authored <code>P1_PARSER</code> and <code>P2_SCORER</code>, maintained iteration log v1–v3, coordinated team deliverables.</td>
-        <td><code>prompts/final/P1_parser.md</code>, <code>prompts/final/P2_scorer.md</code>, 8 commits</td>
+        <td>Designed pipeline architecture, authored <code>P1_PARSER</code> and <code>P2_SCORER</code>, locked temperature to 0.1, maintained prompt iteration log v1–v3.</td>
+        <td><code>prompts/final/P1_parser.md</code>, <code>prompts/final/P2_scorer.md</code>, 7 commits (<code>e27d989</code>, <code>35448b0</code>, <code>fd491e9</code>, <code>835c7fb</code>, <code>79eb54d</code>, <code>0e46c46</code>)</td>
         <td><strong>18%</strong></td>
       </tr>
       <tr>
         <td><strong>Gurpreet Nagar</strong></td>
         <td><strong>S24CSEU2313</strong></td>
-        <td>Prompt Design (Rewriter)</td>
-        <td>Developed <code>P3_REWRITER</code>, curated few-shot demonstration examples, formulated anti-hallucination negative constraints.</td>
-        <td><code>prompts/final/P3_rewriter.md</code>, <code>prompts/v3/</code>, 6 commits</td>
+        <td>Prompt Engineering (Rewriter)</td>
+        <td>Developed <code>P3_REWRITER</code>, curated STAR-method few-shot demonstration examples, formulated anti-hallucination negative constraints.</td>
+        <td><code>prompts/final/P3_rewriter.md</code>, <code>prompts/v3/P1_calibrated_fewshot.md</code>, 6 commits (<code>bdbe136</code>, <code>ec8f4cf</code>, <code>7303f78</code>, <code>d00fda4</code>, <code>3b396b6</code>, <code>c4c5d1b</code>)</td>
         <td><strong>17%</strong></td>
       </tr>
       <tr>
         <td><strong>Yuvraj Pathania</strong></td>
         <td><strong>S24CSEU2668</strong></td>
         <td>Backend & Integration</td>
-        <td>Built API orchestration service, tuned temperature and top-p hyperparameters, resolved JSON formatting issues.</td>
-        <td><code>code/app.py</code>, <code>AI/structuring_service.py</code>, 6 commits</td>
+        <td>Configured AI structuring service, implemented prompt chaining orchestration, sliding-window rate limiting, and JSON error recovery.</td>
+        <td><code>AI/structuring_service.py</code>, <code>AI/alias_normalization.py</code>, <code>AI/models.py</code>, 8 commits (<code>bc7c6a9</code>, <code>e54eabb</code>, <code>46e8d89</code>, <code>9c06d47</code>, <code>b004292</code>)</td>
         <td><strong>17%</strong></td>
       </tr>
       <tr>
         <td><strong>Nakshatra Gupta</strong></td>
         <td><strong>S24CSEU2317</strong></td>
         <td>Frontend & Prototype UI</td>
-        <td>Implemented web user interface, connected frontend forms to prompt outputs, designed score breakdown cards.</td>
-        <td><code>src/components/analyzer/</code>, <code>src/routes/</code>, 5 commits</td>
+        <td>Built candidate application intake interface, resume upload card, multi-step analyzing progress bar, and dark theme design token integration.</td>
+        <td><code>src/components/analyzer/ResumeUploadCard.tsx</code>, <code>src/routes/jobs.$jobId.apply.tsx</code>, 5 commits (<code>b074a3f</code>, <code>0729aa1</code>, <code>c03a322</code>, <code>9b2f91a</code>)</td>
         <td><strong>16%</strong></td>
       </tr>
       <tr>
         <td><strong>Ayush Tiwari</strong></td>
         <td><strong>S24CSEU2318</strong></td>
         <td>Evaluation & Testing</td>
-        <td>Executed 10 test suite evaluations, documented edge/invalid failure cases, created Section 4 test table.</td>
-        <td><code>test-data/test_suite.json</code>, <code>docs/section3_and_4.md</code>, 5 commits</td>
+        <td>Designed 10-input test suite, executed evaluations across 7 job families, analyzed edge and invalid failure modes (Hinglish & 'idk'), authored Section 4.</td>
+        <td><code>test-data/test_suite.json</code>, <code>test-data/README.md</code>, <code>src/components/analyzer/AnalysisScoreCard.tsx</code>, 37 commits (<code>cd2fcd8</code>, etc.)</td>
         <td><strong>16%</strong></td>
       </tr>
       <tr>
         <td><strong>Varnit Agustya</strong></td>
         <td><strong>S24CSEU2355</strong></td>
         <td>Video Reel & Documentation</td>
-        <td>Scripted and recorded the 110-second demonstration reel, created system architecture diagrams, compiled final report and technical report.</td>
-        <td><code>docs/REEL_SCRIPT.md</code>, <code>docs/BastionBytes_TechnicalReport.md</code>, Reel Video Link, Section 2 diagrams</td>
+        <td>Authored 110s demonstration reel script, created Mermaid workflow and architecture diagrams, compiled 2-page Technical Report and CHANGELOG.</td>
+        <td><code>docs/REEL_SCRIPT.md</code>, <code>docs/BastionBytes_TechnicalReport.*</code>, <code>docs/Milestone2_Complete_Report.*</code>, <code>CHANGELOG.md</code>, 7 commits (<code>f8a9ea2</code>, <code>233af24</code>, <code>ba7e57d</code>, <code>e2267b7</code>, <code>55b0048</code>)</td>
         <td><strong>16%</strong></td>
       </tr>
       <tr>

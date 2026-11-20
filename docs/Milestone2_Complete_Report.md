@@ -24,9 +24,9 @@
 | **6** | Varnit Agustya | S24CSEU2355 | S24CSEU2355@bennett.edu.in | Video Reel & Documentation |
 
 ### Submission Links
-- **Prototype Link:** `https://hiresense-resume-reviewer.vercel.app` *(or Google AI Studio shared workspace URL)*
-- **GitHub Repository Link:** `https://github.com/Samanyu-Khanna/C9-Resume-Reviewer`
-- **Demo Video Reel Link:** `https://youtu.be/sample-unlisted-reel` *(or open Google Drive link)*
+- **Prototype Link:** `https://github.com/samanyu22/C9-Resume-Reviewer` *(or deployed Vercel URL)*
+- **GitHub Repository Link:** `https://github.com/samanyu22/C9-Resume-Reviewer`
+- **Demo Video Reel Link:** `https://youtu.be/sample-unlisted-reel` *(or Google Drive link)*
 - **Exact Video Length:** **110 Seconds** *(Between 90 and 150 seconds)*
 
 ---
@@ -357,7 +357,7 @@ We have developed a functional, decomposed prompt pipeline that takes unstructur
 # SECTION 5: REPOSITORY
 
 ### 5.1 Repository Overview
-- **Repository URL:** `https://github.com/Samanyu-Khanna/C9-Resume-Reviewer`
+- **Repository URL:** `https://github.com/samanyu22/C9-Resume-Reviewer`
 - **Visibility:** Public (Accessible to any evaluator without login)
 - **Directory Structure:**
 ```text
@@ -400,14 +400,14 @@ C9-Resume-Reviewer/
 
 # SECTION 7: TEAM CONTRIBUTION TABLE
 
-| Member Name | Enrollment No. | Role | Tasks Done in Milestone 2 | Evidence | Contribution (%) |
+| Member Name | Enrollment No. | Role | Tasks Done in Milestone 2 | Evidence (Files, Commits, Prompt IDs) | Contribution (%) |
 | :--- | :---: | :--- | :--- | :--- | :---: |
-| **Samanyu Khanna** (Leader) | **S24CSEU2705** | Prompt Architecture & Lead | Designed pipeline architecture, authored `P1_PARSER` and `P2_SCORER`, maintained iteration log v1–v3, coordinated team deliverables. | `prompts/final/P1_parser.md`, `prompts/final/P2_scorer.md`, 8 GitHub commits | **18%** |
-| **Gurpreet Nagar** | **S24CSEU2313** | Prompt Design (Rewriter) | Developed `P3_REWRITER`, curated few-shot demonstration examples, formulated anti-hallucination negative constraints. | `prompts/final/P3_rewriter.md`, `prompts/v3/`, 6 GitHub commits | **17%** |
-| **Yuvraj Pathania** | **S24CSEU2668** | Backend & Integration | Built API orchestration service, tuned temperature and top-p hyperparameters, resolved JSON formatting issues. | `code/app.py`, `AI/structuring_service.py`, 6 GitHub commits | **17%** |
-| **Nakshatra Gupta** | **S24CSEU2317** | Frontend & Prototype UI | Implemented web user interface, connected frontend forms to prompt outputs, designed score breakdown cards. | `src/components/analyzer/`, `src/routes/`, 5 GitHub commits | **16%** |
-| **Ayush Tiwari** | **S24CSEU2318** | Evaluation & Testing | Executed 10 test suite evaluations, documented edge/invalid failure cases, created Section 4 test table. | `test-data/test_suite.json`, `docs/section3_and_4.md`, 5 GitHub commits | **16%** |
-| **Varnit Agustya** | **S24CSEU2355** | Video Reel & Documentation | Scripted and recorded the 110-second demonstration reel, created system architecture diagrams, compiled final report and technical report. | `docs/REEL_SCRIPT.md`, `docs/BastionBytes_TechnicalReport.md`, Reel Video Link, Section 2 diagrams | **16%** |
+| **Samanyu Khanna** (Leader) | **S24CSEU2705** | Prompt Architecture & Lead | Designed pipeline architecture, authored `P1_PARSER` and `P2_SCORER`, locked temperature to 0.1, maintained prompt iteration log v1–v3. | `prompts/final/P1_parser.md`, `prompts/final/P2_scorer.md`, `prompts/v1/`, `prompts/v2/`, 7 commits (`e27d989`, `35448b0`, `fd491e9`, `835c7fb`, `79eb54d`, `0e46c46`) | **18%** |
+| **Gurpreet Nagar** | **S24CSEU2313** | Prompt Engineering (Rewriter) | Developed `P3_REWRITER`, curated STAR-method few-shot demonstration examples, formulated anti-hallucination negative constraints. | `prompts/final/P3_rewriter.md`, `prompts/v3/P1_calibrated_fewshot.md`, 6 commits (`bdbe136`, `ec8f4cf`, `7303f78`, `d00fda4`, `3b396b6`, `c4c5d1b`) | **17%** |
+| **Yuvraj Pathania** | **S24CSEU2668** | Backend & Integration | Configured AI structuring service, implemented prompt chaining orchestration, sliding-window rate limiting, and JSON error recovery. | `AI/structuring_service.py`, `AI/alias_normalization.py`, `AI/models.py`, 8 commits (`bc7c6a9`, `e54eabb`, `46e8d89`, `9c06d47`, `b004292`) | **17%** |
+| **Nakshatra Gupta** | **S24CSEU2317** | Frontend & Prototype UI | Built candidate application intake interface, resume upload card, multi-step analyzing progress bar, and dark theme design token integration. | `src/components/analyzer/ResumeUploadCard.tsx`, `src/routes/jobs.$jobId.apply.tsx`, 5 commits (`b074a3f`, `0729aa1`, `c03a322`, `9b2f91a`) | **16%** |
+| **Ayush Tiwari** | **S24CSEU2318** | Evaluation & Testing | Designed 10-input test suite, executed evaluations across 7 job families, analyzed edge and invalid failure modes (Hinglish & 'idk'), authored Section 4. | `test-data/test_suite.json`, `test-data/README.md`, `src/components/analyzer/AnalysisScoreCard.tsx`, 37 commits (`cd2fcd8`, etc.) | **16%** |
+| **Varnit Agustya** | **S24CSEU2355** | Video Reel & Documentation | Authored 110s demonstration reel script, created Mermaid workflow and architecture diagrams, compiled 2-page Technical Report and CHANGELOG. | `docs/REEL_SCRIPT.md`, `docs/BastionBytes_TechnicalReport.*`, `docs/Milestone2_Complete_Report.*`, `CHANGELOG.md`, 7 commits (`f8a9ea2`, `233af24`, `ba7e57d`, `e2267b7`, `55b0048`) | **16%** |
 | **Total** | | | | | **100%** |
 
 *All team members have reviewed and unanimously agreed to the contribution percentages and tasks listed in this table.*
