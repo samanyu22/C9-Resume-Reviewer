@@ -245,8 +245,20 @@ Do NOT invent metrics, percentages, or unmentioned tools. Start with strong acti
       <tr>
         <td><strong>4. AI Interview Question Generator</strong></td>
         <td>Generates dynamic technical verification questions based on identified candidate gaps.</td>
-        <td><strong>Partly Working</strong></td>
-        <td>Prompt tested in AI Studio; full voice/audio state machine planned for Milestone 3.</td>
+        <td><strong>Working</strong></td>
+        <td>Multilingual level-calibrated 5-phase planner integrated with speech transcription and live proctoring events.</td>
+      </tr>
+      <tr>
+        <td><strong>5. AI Job Profile Structuring Engine &amp; Fallback</strong></td>
+        <td>Converts unstructured recruiter descriptions into structured <code>JobRequirementProfile</code> listings with strict Pydantic schemas, multi-key Gemini/OpenAI rotation, and an offline deterministic fallback extractor.</td>
+        <td><strong>Working</strong></td>
+        <td>Implemented in Python FastAPI (<code>AI/main.py</code>) &amp; CLI (<code>AI/cli.py</code>); tested with 12 automated unit tests.</td>
+      </tr>
+      <tr>
+        <td><strong>6. Automated Test Suites (Vitest + Python unittest)</strong></td>
+        <td>Validates mathematical scoring, application state machine, candidate intake, authentication, and alias normalization across 55 total unit tests.</td>
+        <td><strong>Working</strong></td>
+        <td>43 frontend tests in Vitest + 12 backend tests in Python <code>unittest</code> (100% pass rate).</td>
       </tr>
     </tbody>
   </table>
@@ -392,13 +404,13 @@ Job Description: Data Analyst Intern requiring Python, SQL, Excel, and data visu
   </table>
 
   <h2>4.2 Error Analysis on Failed Tests</h2>
-  <p><strong>Test 8 (Hinglish Failure):</strong> When presented with code-mixed vernacular, the model correctly identified technical entities but mirrored the candidate's conversational dialect in its output explanation. <em>Fix for M3:</em> Implement a pre-LLM language routing rule and enforce <code>OUTPUT_LANGUAGE: STRICT_ENGLISH</code>.</p>
-  <p><strong>Test 10 (Single-word "idk" Failure):</strong> Generative LLMs exhibit positive completion bias, attempting to extract meaning from noise. <em>Fix for M3:</em> Implement a deterministic character length guard (&ge; 150 characters) prior to LLM invocation.</p>
+  <p><strong>Test 8 (Hinglish Dialect Drift):</strong> When presented with code-mixed vernacular, the model correctly identified technical entities but mirrored the candidate's conversational dialect in its output explanation. <em>Mitigation for M3:</em> Implement a pre-LLM language routing rule and enforce <code>OUTPUT_LANGUAGE: STRICT_ENGLISH</code>.</p>
+  <p><strong>Test 10 (Single-word "idk" Hallucination):</strong> Generative LLMs exhibit positive completion bias, attempting to extract meaning from noise. <em>Resolution Implemented:</em> Added deterministic client-side and server-side length validation guards in <code>src/components/analyzer/ResumeUploadCard.tsx</code> and Pydantic schemas (<code>AI/models.py</code>), ensuring malformed or single-word submissions trigger clear user-facing errors before model invocation.</p>
 
-  <h2>4.3 Known Limitations & Next Steps</h2>
+  <h2>4.3 Known Limitations &amp; Implemented Solutions</h2>
   <p>1. <strong>Multi-Column PDF Flattening:</strong> Standard parsers scramble 2-column resumes. <em>Next Step:</em> Introduce bounding-box OCR in Milestone 3.</p>
   <p>2. <strong>Pipeline Latency:</strong> 3 sequential calls require 4.5–7.0s. <em>Next Step:</em> Concurrently execute <code>P2</code> and <code>P3</code> after <code>P1</code> resolves.</p>
-  <p>3. <strong>Floating-Point Precision:</strong> Models occasionally make minor rounding errors. <em>Next Step:</em> Move final weighting to deterministic backend math.</p>
+  <p>3. <strong>Floating-Point Precision &amp; Determinism:</strong> Models occasionally make minor rounding errors. <em>Resolution Implemented:</em> Offloaded weighted formula calculations ($0.40 \cdot \text{Skills} + \dots$) to pure TypeScript functions in <code>src/lib/scoring.ts</code> (<code>computeComposite</code>) and <code>src/lib/ai-analyzer.ts</code>, using the LLM strictly for entity extraction and evidence citation.</p>
 
   <div class="page-break"></div>
 

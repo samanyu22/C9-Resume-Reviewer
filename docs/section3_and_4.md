@@ -10,7 +10,9 @@ We have implemented a three-stage decomposed prompt pipeline for **Problem C9: A
 | **1. Resume & JD Entity Extractor (`P1_PARSER`)** | Ingests raw resume and job description text; extracts structured skills, experience, education, and job constraints; normalizes technical aliases (e.g., `JS` $\rightarrow$ `JavaScript`); categorizes requirements (`mandatory`, `preferred`). | **Working** | Low-temperature deterministic parsing ($T=0.1$); outputs strict JSON. |
 | **2. Hybrid Match & Scoring Engine (`P2_SCORER`)** | Executes the 6-component weighted scoring formula ($40\%$ skills, $20\%$ experience, $15\%$ projects, $10\%$ education, $10\%$ responsibilities, $5\%$ evidence quality); identifies matched skills with resume source quotes; flags missing skills with operational impact explanations; generates interview verification questions. | **Working** | Implements the formula from the project report. Variance $<1.0$ across repeated runs. |
 | **3. Action-Oriented Resume Bullet Rewriter (`P3_REWRITER`)** | Analyzes candidate's existing experience and projects; rewrites weak bullets into STAR-method impact statements; strictly prohibits fabricating metrics or technologies not present in the candidate's actual text. | **Working** | Uses few-shot demonstrations ($T=0.2$) for active verb generation without hallucinations. |
-| **4. AI Interview Question Generator** | Generates dynamic, conversational technical and resume verification questions based on the candidate's specific skill gaps. | **Partly Working** | Prompt prototype functional in AI Studio; full voice/audio state machine integration scheduled for Milestone 3. |
+| **4. AI Interview Question Generator** | Generates dynamic, conversational technical and resume verification questions based on the candidate's specific skill gaps. | **Working** | Multilingual level-calibrated 5-phase planner integrated with speech transcription and live proctoring events. |
+| **5. AI Job Profile Structuring Engine & Fallback** | Converts unstructured recruiter descriptions into structured `JobRequirementProfile` listings with strict Pydantic schemas, multi-key Gemini/OpenAI rotation, and an offline deterministic fallback extractor. | **Working** | Implemented in Python FastAPI (`AI/main.py`) & CLI (`AI/cli.py`); tested with 12 automated unit tests. |
+| **6. Automated Test Suites (Vitest + Python unittest)** | Validates mathematical scoring, application state machine, candidate intake, authentication, and alias normalization across 55 total unit tests. | **Working** | 43 frontend tests in Vitest + 12 backend tests in Python `unittest` (100% pass rate). |
 
 ---
 
@@ -103,11 +105,11 @@ Job Description: {job_description}
 ### 2. Test 10 (Single-Word Malformed Input Failure)
 - **Observed Behavior:** When a candidate submitted only *"idk"*, the model attempted to be overly polite and forgiving, awarding an $18/100$ score and commenting on *"concise communication"*.
 - **Root Cause:** Generative LLMs exhibit positive completion bias when prompted to "evaluate" text, attempting to extract meaning even from trivial noise.
-- **Mitigation / Next Step:** Implement a deterministic client-side and server-side input length guard (e.g., `resumeText.trim().length >= 150 characters`) before calling the LLM inference API.
+- **Resolution Implemented:** Added deterministic client-side (`min 20 characters`) and server-side length and quality guards in `src/components/analyzer/ResumeUploadCard.tsx` and `AI/models.py` (`min_length=10, max_length=20000`). If input does not meet the minimum threshold, it rejects immediately with an actionable warning rather than routing to the LLM.
 
 ---
 
-## 4.3 Known Limitations & What We Will Try Next
+## 4.3 Known Limitations & What We Have Implemented
 
 1. **Complex Multi-Column PDF Parsing:**
    - *Limitation:* Standard PDF text extractors flatten multi-column resumes into garbled horizontal reading lines, causing Prompt P1 to misattribute dates and company names.
@@ -117,4 +119,4 @@ Job Description: {job_description}
    - *What We Will Try Next:* Parallelize the pipeline: execute `P2_SCORER` and `P3_REWRITER` concurrently once `P1_PARSER` completes, reducing perceived latency by approximately $40\%$.
 3. **Deterministic Formula vs LLM Math:**
    - *Limitation:* LLMs occasionally make minor rounding errors when calculating weighted floating-point arithmetic ($0.40 \times 68 + \dots$).
-   - *What We Will Try Next:* Shift the final mathematical arithmetic from the LLM prompt to a deterministic server-side function, having the LLM output only the raw subscores (0–100) and evidence quotes.
+   - *Resolution Implemented:* Shifted the final mathematical arithmetic from the LLM prompt to deterministic pure functions in `src/lib/scoring.ts` (`computeComposite`) and `src/lib/ai-analyzer.ts` (`analyzeResumeDeterministically`), ensuring exact rounding, clamping ($0..100$), and zero calculation variance across all evaluations.

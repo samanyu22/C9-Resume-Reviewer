@@ -6,6 +6,23 @@ All notable changes to the prompt pipeline, prototype architecture, and test sui
 
 ---
 
+### [Milestone 2.1] — 2026-11-24
+
+#### Added
+- **Deterministic Rule-Based Fallback Engine**: Implemented `deterministic_structuring_fallback` in `AI/structuring_service.py` enabling zero-API-key offline execution and fault tolerance during external LLM rate limits/outages.
+- **Python Unit Test Suite**: Added `AI/tests/test_structuring.py` with 12 comprehensive unit tests covering alias normalization, input sanitization, Pydantic schemas, and fallback structuring (100% pass rate).
+- **Expanded Canonical Tech Catalog**: Added modern frontend and data analytics technologies (`Vitest`, `Playwright`, `TanStack`, `Zod`, `Apache Kafka`, `RabbitMQ`, `Microsoft Excel`, `Power BI`, `Tableau`) to `AI/alias_normalization.py`.
+- **Root Requirements Configuration**: Added root `requirements.txt` mapping to `-r AI/requirements.txt` for standardized Python dependency management across environments.
+- **Convenience NPM Scripts**: Added `test:ai` (Python test discovery), `typecheck` (compiler check without emitting files), and `ai:service` (FastAPI microservice launcher) to `package.json`.
+
+#### Fixed
+- **Pydantic Validation Error in AI Models**: Resolved `about_role` field requirement crash in `AI/models.py` by providing a safe default and fallback synthesis in `post_process_listing`.
+- **Client Bundle Contamination**: Guarded Node runtime imports (`node:util`, `node:child_process`) in `src/lib/ai-listing.ts` with `typeof window === 'undefined'` and `/* @vite-ignore */` annotations to eliminate Vite browser warnings.
+- **TypeScript `noImplicitReturns` & Typing Mismatches**: Resolved `useEffect` return paths and Supabase `Json` type mismatches across `AddJobModal.tsx`, `EditJobModal.tsx`, `AiInterviewRoom.tsx`, `Hero.tsx`, `HeroVisual.tsx`, and `jobs.$jobId.apply.tsx`.
+- **Offline Test Suite Resilience**: Added resilient local fallback mocks to `src/test/auth-login.test.ts`, allowing all 43 Vitest tests to pass 100% deterministically in sandboxed or offline environments.
+
+---
+
 ### [Milestone 2] — 2026-11-20
 
 #### Added

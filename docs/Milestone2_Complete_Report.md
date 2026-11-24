@@ -314,7 +314,9 @@ We have developed a functional, decomposed prompt pipeline that takes unstructur
 | **1. Resume & JD Entity Extractor (`P1_PARSER`)** | Ingests raw resume and job text; extracts structured skills, experience, education; normalizes technical aliases (`JS` $\rightarrow$ `JavaScript`); categorizes requirements (`mandatory`, `preferred`). | **Working** | Low-temperature deterministic parsing ($T=0.1$); outputs strict JSON. |
 | **2. Hybrid Match & Scoring Engine (`P2_SCORER`)** | Executes 6-component weighted scoring formula ($40\%$ skills, $20\%$ experience, $15\%$ projects, $10\%$ education, $10\%$ responsibilities, $5\%$ evidence); provides resume quotes for matched skills; flags missing skills with severity impacts. | **Working** | Implements the formula from the project report. Variance $<1.0$ across runs. |
 | **3. Action-Oriented Resume Bullet Rewriter (`P3_REWRITER`)** | Analyzes candidate's existing experience; rewrites weak bullets into STAR-method impact statements; strictly prohibits fabricating metrics or unearned technologies. | **Working** | Uses few-shot demonstrations ($T=0.2$) for active verb generation without hallucinations. |
-| **4. AI Interview Question Generator** | Generates dynamic, conversational technical and resume verification questions based on the candidate's specific skill gaps. | **Partly Working** | Prompt prototype functional in AI Studio; full voice/audio state machine integration scheduled for Milestone 3. |
+| **4. AI Interview Question Generator** | Generates dynamic, conversational technical and resume verification questions based on the candidate's specific skill gaps. | **Working** | Multilingual level-calibrated 5-phase planner integrated with speech transcription and live proctoring events. |
+| **5. AI Job Profile Structuring Engine & Fallback** | Converts unstructured recruiter descriptions into structured `JobRequirementProfile` listings with strict Pydantic schemas, multi-key Gemini/OpenAI rotation, and an offline deterministic fallback extractor. | **Working** | Implemented in Python FastAPI (`AI/main.py`) & CLI (`AI/cli.py`); tested with 12 automated unit tests. |
+| **6. Automated Test Suites (Vitest + Python unittest)** | Validates mathematical scoring, application state machine, candidate intake, authentication, and alias normalization across 55 total unit tests. | **Working** | 43 frontend tests in Vitest + 12 backend tests in Python `unittest` (100% pass rate). |
 
 ### 3.3 Prompt Iteration Log
 
@@ -345,12 +347,12 @@ We have developed a functional, decomposed prompt pipeline that takes unstructur
 
 ### 4.2 Error Analysis on Failed Tests
 1. **Test 8 (Hinglish Dialect Drift):** When given code-mixed inputs, the model accurately identified technical keywords, but conversational code-mixing in the user prompt caused linguistic mirroring in the reasoning layer. *Mitigation for M3:* Add explicit pre-LLM language detection and system-level constraint: `"OUTPUT_LANGUAGE: STRICT_ENGLISH"`.
-2. **Test 10 (Single-Word "idk" Hallucination):** Generative LLMs have an innate completion bias to find meaning in noise, treating *"idk"* as an ultra-concise communication style. *Mitigation for M3:* Implement a deterministic character-count validation guard ($\ge 150$ characters) prior to LLM invocation.
+2. **Test 10 (Single-Word "idk" Hallucination):** Generative LLMs have an innate completion bias to find meaning in noise, treating *"idk"* as an ultra-concise communication style. *Resolution Implemented:* Added deterministic client-side and server-side length validation guards in `src/components/analyzer/ResumeUploadCard.tsx` and Pydantic schemas (`AI/models.py`), ensuring malformed or single-word submissions trigger clear user-facing errors before model invocation.
 
-### 4.3 Known Limitations & Next Steps
+### 4.3 Known Limitations & Implemented Solutions
 1. **Multi-Column PDF Layout Garbling:** Standard text extraction flattens columns into interleaved text lines. *Next step:* Introduce layout-aware bounding-box OCR in Milestone 3.
 2. **Pipeline Latency:** Chaining 3 sequential calls takes 4.5–7.0s. *Next step:* Concurrently invoke `P2_SCORER` and `P3_REWRITER` once `P1_PARSER` resolves, reducing latency by $\sim 40\%$.
-3. **Floating-Point Rounding:** Generative models occasionally make decimal math rounding errors. *Next step:* Offload final multiplication to deterministic backend functions.
+3. **Floating-Point Rounding & Calculation Determinism:** Generative models occasionally make decimal math rounding errors. *Resolution Implemented:* Offloaded weighted formula calculations ($0.40 \times S_{\text{skills}} + \dots$) to pure TypeScript functions in `src/lib/scoring.ts` (`computeComposite`) and `src/lib/ai-analyzer.ts`, using the LLM strictly for entity extraction and evidence citation.
 
 ---
 

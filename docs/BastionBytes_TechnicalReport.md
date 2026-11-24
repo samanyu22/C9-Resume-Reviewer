@@ -78,8 +78,9 @@ The pipeline was validated against a 10-input test suite covering diverse roles 
 ### 5. Ethical AI, Bias Mitigation, and Limitations
 
 1. **PII and Protected Attributes:** The extraction prompt strictly isolates technical entities, discarding gender, age, religion, and demographic markers before evaluation.
-2. **Deterministic Pre-Validation:** To fix the Test 10 failure, production builds require a client-side length check ($\ge 150$ characters) prior to LLM invocation.
-3. **Language Normalization:** To prevent dialect mirroring (Test 8), a strict system constraint (`OUTPUT_LANGUAGE: STRICT_EN_US`) is mandated for Milestone 3.
+2. **Deterministic Pre-Validation & Fallback:** Implemented deterministic client-side and server-side length validation guards alongside a local rule-based fallback engine that guarantees offline execution and graceful error recovery.
+3. **Offloaded Arithmetic:** Mathematical scoring calculations are decoupled from LLM generation and executed via pure deterministic backend functions, ensuring exact calculation consistency.
+4. **Language Normalization:** To prevent dialect mirroring (Test 8), a strict system constraint (`OUTPUT_LANGUAGE: STRICT_EN_US`) is enforced.
 
 ---
 
