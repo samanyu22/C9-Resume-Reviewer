@@ -41,6 +41,7 @@ function Index() {
       }, 80);
       return () => clearTimeout(t);
     }
+    return undefined;
   }, [hash]);
 
   return (

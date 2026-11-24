@@ -170,7 +170,7 @@ export function Hero() {
         <h1 className="text-display max-w-[1100px]">
           {words.map((w, i) =>
             w === "evidence," ? (
-              <EvidenceWord key={w} reduce={reduce} ready={ready} delay={0.1 + i * 0.06} />
+              <EvidenceWord key={w} reduce={Boolean(reduce)} ready={ready} delay={0.1 + i * 0.06} />
             ) : (
               <span key={w} className="inline-block overflow-hidden pb-[0.08em] align-bottom">
                 <motion.span

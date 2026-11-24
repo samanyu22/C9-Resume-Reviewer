@@ -493,7 +493,7 @@ export function HeroVisual({ start }: { start: boolean }) {
                         }}
                         className="inline-flex"
                       >
-                        <Dot status={r.status} on={lit} delay={rowDelay(i)} />
+                        <Dot status={r.status} on={Boolean(lit)} delay={rowDelay(i)} />
                       </span>
                     </span>
                   </li>

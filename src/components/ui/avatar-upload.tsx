@@ -66,6 +66,7 @@ export function AvatarUpload({
     } else {
       setPreviewUrl(null);
     }
+    return undefined;
   }, [file]);
 
   const validateFile = useCallback(

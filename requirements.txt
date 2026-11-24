@@ -1,0 +1,2 @@
+# HireSense Python Requirements
+-r AI/requirements.txt

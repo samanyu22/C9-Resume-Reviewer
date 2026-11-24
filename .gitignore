@@ -159,3 +159,12 @@ vite.config.ts.timestamp-*
 # Prototype-1 (promoted to root — no longer needed)
 
 env_files.txt
+
+# Python
+.venv/
+venv/
+ENV/
+env/
+__pycache__/
+*.py[cod]
+*$py.class

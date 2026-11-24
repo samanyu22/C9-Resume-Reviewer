@@ -18,6 +18,7 @@ import type {
   StructuredJobListing,
   TechStackItem,
   RequirementType,
+  Json,
 } from "@/types/database.types";
 import { TechLogoTile } from "./TechLogoTile";
 
@@ -125,7 +126,7 @@ export function AddJobModal({
         salary_period: structured.salary?.period || "month",
         salary_display: structured.salary?.display || salary || "Not specified",
         raw_input: description,
-        generated_posting: structured as unknown as Record<string, unknown>,
+        generated_posting: structured as unknown as Json,
         model_name: modelName,
         prompt_version: promptVersion,
         status,

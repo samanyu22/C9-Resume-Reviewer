@@ -28,6 +28,7 @@ import {
   type InterviewQuestion,
   type InterviewScorecard,
 } from "@/lib/ai-interview";
+import type { Json } from "@/types/database.types";
 import { useMediaSession } from "@/hooks/useMediaSession";
 import { useMiraSpeech, unlockAudio } from "@/hooks/useMiraSpeech";
 import { VoicePill, type VoiceState } from "@/components/interview/VoicePill";
@@ -543,7 +544,7 @@ export function AiInterviewRoom({
               interview_scorecard: finalScorecard,
               overallScore: finalScorecard.overallScore,
               stage: "interview_completed",
-            },
+            } as unknown as Json,
             status: "under_review",
             result_published: true,
           },

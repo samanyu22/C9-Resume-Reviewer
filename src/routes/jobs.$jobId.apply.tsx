@@ -13,7 +13,7 @@ import {
   FileText,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import type { Job, StructuredJobListing } from "@/types/database.types";
+import type { Job, StructuredJobListing, Json } from "@/types/database.types";
 import { CompanyLogo } from "@/components/CompanyLogo";
 import { TechLogoTile } from "@/components/TechLogoTile";
 import { ResumeUploadCard, type ResumeUploadData } from "@/components/analyzer/ResumeUploadCard";
@@ -343,7 +343,7 @@ function JobApplyPage() {
               student_id: user.id,
               resume_path: uploadData.fileName,
               match_score: result.overall_fit_percentage,
-              match_report: reportPayload,
+              match_report: reportPayload as unknown as Json,
               status: "under_review",
               result_published: true,
             },

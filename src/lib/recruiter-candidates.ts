@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabase";
+import type { Json } from "@/types/database.types";
 import type { ResumeAnalysisResult } from "./ai-analyzer";
 import type { InterviewScorecard } from "./ai-interview";
 import { type ApplicationRecord } from "./applications";
@@ -139,7 +140,7 @@ export async function getCandidatesForJob(
                 if (!app || !app.userId) continue;
 
                 // Smart matching: direct jobId match OR jobTitle match OR targetRole match OR fallback match
-                const targetRole = (app.resume?.analysisResult?.target_role || "").toLowerCase();
+                const targetRole = (app.resume?.analysisResult?.target_job_title || (app.resume?.analysisResult as any)?.target_role || "").toLowerCase();
                 const cleanJobTitle = (jobTitle || "").toLowerCase().replace(/–/g, "-");
                 const cleanAppJobId = (app.jobId || "").toLowerCase().replace(/–/g, "-");
                 const cleanTargetJobId = (jobId || "").toLowerCase().replace(/–/g, "-");
@@ -232,7 +233,7 @@ export async function getCandidatesForJob(
                           interview_scorecard:
                             existing.interviewScorecard || app.resultSummary?.scorecard,
                           overallScore: existing.interviewScore,
-                        },
+                        } as unknown as Json,
                         status: "under_review",
                       })
                       .eq("id", existing.id)

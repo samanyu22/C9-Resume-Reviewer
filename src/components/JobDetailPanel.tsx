@@ -72,6 +72,7 @@ export function JobDetailPanel({
         active = false;
       };
     }
+    return undefined;
   }, [job?.id, job?.title, isRecruiter, recruiterView]);
 
   // Parse structured data safely

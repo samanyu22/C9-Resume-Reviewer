@@ -64,6 +64,7 @@ export function AssistedPasswordConfirmation({
       const timer = setTimeout(() => setShake(false), 500);
       return () => clearTimeout(timer);
     }
+    return undefined;
   }, [shake]);
 
   const bounceAnimation = prefersReducedMotion

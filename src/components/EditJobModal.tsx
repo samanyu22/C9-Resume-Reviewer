@@ -6,6 +6,7 @@ import type {
   StructuredJobListing,
   TechStackItem,
   RequirementType,
+  Json,
 } from "@/types/database.types";
 
 interface EditJobModalProps {
@@ -75,7 +76,7 @@ export function EditJobModal({ job, isOpen, onClose, onSuccess }: EditJobModalPr
         salary_currency: structured.salary?.currency || "INR",
         salary_period: structured.salary?.period || "month",
         salary_display: structured.salary?.display || "Not specified",
-        generated_posting: structured as unknown as Record<string, unknown>,
+        generated_posting: structured as unknown as Json,
         status,
       };
 

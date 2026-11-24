@@ -77,6 +77,7 @@ export const SmoothInput = forwardRef<HTMLInputElement, SmoothInputProps>(
         media.addEventListener("change", listener);
         return () => media.removeEventListener("change", listener);
       }
+      return undefined;
     }, []);
 
     const springConfig = prefersReducedMotion

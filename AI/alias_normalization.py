@@ -124,13 +124,32 @@ TECH_CATALOG: Dict[str, Tuple[str, Optional[str], str]] = {
     "android": ("Android", "android", "mobile"),
     "ios": ("iOS", "apple", "mobile"),
 
-    # Tools
+    # Tools & Testing
     "git": ("Git", "git", "tools"),
     "github": ("GitHub", "github", "tools"),
     "gitlab": ("GitLab", "gitlab", "tools"),
     "jira": ("Jira", "jira", "tools"),
     "figma": ("Figma", "figma", "tools"),
     "postman": ("Postman", "postman", "tools"),
+    "vite": ("Vite", "vite", "tools"),
+    "vitest": ("Vitest", None, "tools"),
+    "jest": ("Jest", "jest", "tools"),
+    "playwright": ("Playwright", "playwright", "tools"),
+    "zod": ("Zod", None, "tools"),
+    "tanstack": ("TanStack", None, "tools"),
+    "tanstack router": ("TanStack Router", None, "tools"),
+    "kafka": ("Apache Kafka", "apachekafka", "backend"),
+    "apache kafka": ("Apache Kafka", "apachekafka", "backend"),
+    "rabbitmq": ("RabbitMQ", "rabbitmq", "backend"),
+
+    # Data Analytics & BI
+    "excel": ("Microsoft Excel", None, "tools"),
+    "microsoft excel": ("Microsoft Excel", None, "tools"),
+    "ms excel": ("Microsoft Excel", None, "tools"),
+    "tableau": ("Tableau", None, "tools"),
+    "powerbi": ("Power BI", None, "tools"),
+    "power bi": ("Power BI", None, "tools"),
+    "data visualization": ("Data Visualization", None, "other"),
 }
 
 def normalize_tech_alias(raw_name: str, given_category: Optional[str] = None) -> Tuple[str, str, Optional[str]]:

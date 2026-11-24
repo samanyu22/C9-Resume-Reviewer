@@ -30,7 +30,7 @@ class StructuredJobListing(BaseModel):
     employment_type: Optional[str] = Field(None, description="Employment type: Full-time, Part-time, Internship, Contract, or null if not specified")
     experience: Optional[str] = Field(None, description="Experience requirement string, e.g. 2-4 years, or null if not specified")
     salary: SalaryStructure = Field(default_factory=lambda: SalaryStructure(min=None, max=None, currency="INR", period="month", display="Not specified"))
-    about_role: str = Field(..., description="Summary overview of the role")
+    about_role: str = Field(default="", description="Summary overview of the role")
     responsibilities: List[str] = Field(default_factory=list, description="Clear, bulleted job responsibilities")
     qualifications: Qualifications = Field(default_factory=lambda: Qualifications(mandatory=[], preferred=[]))
     tech_stack: List[TechStackItem] = Field(default_factory=list, description="Technologies and skills identified")

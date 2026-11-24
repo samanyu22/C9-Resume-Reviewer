@@ -80,50 +80,54 @@ export async function executeAiStructuring(
     // FastAPI microservice not running on port 8000, seamlessly try CLI execution
   }
 
-  // 2. Strategy B: Execute Python AI CLI via child process
-  try {
-    const { execFile } = await import("node:child_process");
-    const { promisify } = await import("node:util");
-    const execFileAsync = promisify(execFile);
+  // 2. Strategy B: Execute Python AI CLI via child process (server-side only)
+  if (typeof window === "undefined") {
+    try {
+      const { execFile } = await import(/* @vite-ignore */ "node:child_process");
+      const { promisify } = await import(/* @vite-ignore */ "node:util");
+      const execFileAsync = promisify(execFile);
 
-    const workspaceRoot = process.cwd();
-    const pythonArgs = [
-      "-m",
-      "AI.cli",
-      "--title",
-      title,
-      "--company",
-      company,
-      "--desc",
-      description,
-      "--salary",
-      salary || "",
-    ];
+      const workspaceRoot = process.cwd();
+      const pythonArgs = [
+        "-m",
+        "AI.cli",
+        "--title",
+        title,
+        "--company",
+        company,
+        "--desc",
+        description,
+        "--salary",
+        salary || "",
+      ];
 
-    const { stdout, stderr } = await execFileAsync("python", pythonArgs, {
-      cwd: workspaceRoot,
-      timeout: 40000,
-      env: {
-        ...process.env,
-        PYTHONIOENCODING: "utf-8",
-      },
-    });
+      const { stdout, stderr } = await execFileAsync("python", pythonArgs, {
+        cwd: workspaceRoot,
+        timeout: 40000,
+        env: {
+          ...process.env,
+          PYTHONIOENCODING: "utf-8",
+        },
+      });
 
-    if (!stdout && stderr) {
-      console.error("AI CLI stderr:", stderr);
+      if (!stdout && stderr) {
+        console.error("AI CLI stderr:", stderr);
+      }
+
+      const parsed = JSON.parse(stdout.trim()) as GenerateListingResult;
+      return parsed;
+    } catch (cliError: unknown) {
+      console.error("Python AI CLI execution error:", cliError);
+      const err = cliError as { message?: string };
+      throw new Error(
+        `Failed to structure job listing: ${
+          err?.message || "AI structuring engine timed out or encountered an error."
+        }`,
+      );
     }
-
-    const parsed = JSON.parse(stdout.trim()) as GenerateListingResult;
-    return parsed;
-  } catch (cliError: unknown) {
-    console.error("Python AI CLI execution error:", cliError);
-    const err = cliError as { message?: string };
-    throw new Error(
-      `Failed to structure job listing: ${
-        err?.message || "AI structuring engine timed out or encountered an error."
-      }`,
-    );
   }
+
+  throw new Error("AI structuring engine is currently unavailable.");
 }
 
 /**

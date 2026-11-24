@@ -12,6 +12,9 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:ai": "python -m unittest discover -s AI/tests",
+    "typecheck": "tsc --noEmit",
+    "ai:service": "python -m AI.main",
     "verify:gemini": "python scripts/verify-gemini-keys.py"
   },
   "overrides": {

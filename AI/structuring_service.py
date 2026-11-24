@@ -118,6 +118,30 @@ def post_process_listing(listing_dict: dict, fallback_title: str, fallback_compa
     if not listing_dict.get("company"):
         listing_dict["company"] = fallback_company or "HireSense"
 
+    # Ensure about_role is present
+    if not listing_dict.get("about_role"):
+        listing_dict["about_role"] = (
+            listing_dict.get("summary")
+            or listing_dict.get("overview")
+            or listing_dict.get("description")
+            or f"Open role for {listing_dict['title']} at {listing_dict['company']}."
+        )
+
+    # Ensure list fields are valid lists
+    for list_field in ["responsibilities", "benefits"]:
+        val = listing_dict.get(list_field)
+        if not isinstance(val, list):
+            listing_dict[list_field] = [str(val)] if val else []
+
+    quals = listing_dict.get("qualifications")
+    if not isinstance(quals, dict):
+        listing_dict["qualifications"] = {"mandatory": [], "preferred": []}
+    else:
+        if not isinstance(quals.get("mandatory"), list):
+            quals["mandatory"] = []
+        if not isinstance(quals.get("preferred"), list):
+            quals["preferred"] = []
+
     # Normalize tech stack items with our canonical catalog
     tech_stack_raw = listing_dict.get("tech_stack", [])
     normalized_tech = []
@@ -249,6 +273,94 @@ async def call_gemini_structuring(prompt_user_content: str, api_key: str, model_
         return json.loads(raw_text)
 
 
+def deterministic_structuring_fallback(
+    title: str,
+    company: str,
+    description: str,
+    salary: str = "",
+) -> dict:
+    """
+    Deterministic rule-based extractor when external LLMs are unavailable or offline.
+    Extracts experience, work mode, tech stack, and responsibilities directly from text.
+    """
+    lower_desc = description.lower()
+
+    # Detect work mode
+    work_mode = None
+    if "remote" in lower_desc:
+        work_mode = "remote"
+    elif "hybrid" in lower_desc:
+        work_mode = "hybrid"
+    elif "onsite" in lower_desc or "on-site" in lower_desc:
+        work_mode = "onsite"
+
+    # Detect employment type
+    employment_type = "Full-time"
+    if "intern" in lower_desc:
+        employment_type = "Internship"
+    elif "contract" in lower_desc:
+        employment_type = "Contract"
+    elif "part-time" in lower_desc:
+        employment_type = "Part-time"
+
+    # Detect experience
+    exp_match = re.search(r"(\d+\s*(?:-|to|\+)?\s*\d*\s*(?:years?|yrs?))", description, re.IGNORECASE)
+    experience = exp_match.group(1).strip() if exp_match else None
+
+    # Detect tech stack from catalog
+    detected_tech = []
+    seen = set()
+    from AI.alias_normalization import TECH_CATALOG
+    for alias, (canonical, devicon, cat) in TECH_CATALOG.items():
+        if canonical.lower() in seen:
+            continue
+        pattern = r"\b" + re.escape(alias) + r"\b"
+        if re.search(pattern, lower_desc):
+            seen.add(canonical.lower())
+            is_mandatory = bool(re.search(r"(?:must|required|mandatory|essential).{1,40}" + re.escape(alias), lower_desc))
+            detected_tech.append({
+                "name": alias,
+                "canonical_name": canonical,
+                "category": cat,
+                "devicon_slug": devicon,
+                "requirement_type": "mandatory" if is_mandatory else "preferred"
+            })
+
+    # Responsibilities extraction (lines with bullets or dashes or verbs)
+    responsibilities = []
+    lines = [line.strip().lstrip("-*•> ").strip() for line in description.splitlines() if line.strip()]
+    for line in lines:
+        if 20 < len(line) < 250:
+            if any(line.lower().startswith(v) for v in ["develop", "build", "maintain", "design", "collaborate", "lead", "write", "manage", "implement", "create"]):
+                responsibilities.append(line)
+    if not responsibilities:
+        responsibilities = [l for l in lines if len(l) > 25][:5]
+
+    return {
+        "title": title or "Job Opening",
+        "company": company or "HireSense",
+        "location": None,
+        "work_mode": work_mode,
+        "employment_type": employment_type,
+        "experience": experience,
+        "salary": {
+            "min": None,
+            "max": None,
+            "currency": "INR",
+            "period": "month",
+            "display": salary if salary else "Not specified",
+        },
+        "about_role": f"Opportunity for a {title} at {company}. Join the team to build high-impact systems.",
+        "responsibilities": responsibilities,
+        "qualifications": {
+            "mandatory": [t["canonical_name"] for t in detected_tech if t["requirement_type"] == "mandatory"][:5],
+            "preferred": [t["canonical_name"] for t in detected_tech if t["requirement_type"] == "preferred"][:5],
+        },
+        "tech_stack": detected_tech,
+        "benefits": ["Competitive Compensation", "Flexible Work Environment", "Health & Wellness Coverage"],
+    }
+
+
 async def generate_structured_listing(
     title: str,
     company: str,
@@ -338,9 +450,11 @@ Generate the structured JSON job listing according to the rules and schema."""
                 continue
 
     if not parsed_json:
-        raise RuntimeError(
-            f"All AI structuring providers failed. Last error: {last_error}"
+        logger.info("Falling back to local deterministic structuring engine...")
+        parsed_json = deterministic_structuring_fallback(
+            clean_title, clean_company, clean_desc, clean_salary
         )
+        model_used = "hiresense/deterministic-engine (fallback)"
 
     # Step 3: Validate and enrich
     structured_listing = post_process_listing(parsed_json, clean_title, clean_company)

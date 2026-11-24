@@ -265,7 +265,7 @@ export function CandidateAuditModal({
                             "Demonstrated structured thinking across core topics.",
                             "Consistent explanations during verification.",
                           ]
-                  ).slice(0, 4).map((item, idx) => (
+                  ).slice(0, 4).map((item: string, idx: number) => (
                     <li key={idx} className="flex items-start gap-1.5">
                       <span className="text-[#5c5c5c]">•</span>
                       <span>{item}</span>
@@ -288,7 +288,7 @@ export function CandidateAuditModal({
                             "Ask about distributed systems trade-offs.",
                             "Verify individual contributions to highlighted team projects.",
                           ]
-                  ).slice(0, 4).map((item, idx) => (
+                  ).slice(0, 4).map((item: string, idx: number) => (
                     <li key={idx} className="flex items-start gap-1.5">
                       <span className="text-[#5c5c5c]">•</span>
                       <span>{item}</span>

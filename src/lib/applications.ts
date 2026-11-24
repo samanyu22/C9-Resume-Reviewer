@@ -219,6 +219,7 @@ export function recordResumeUploaded(
     resumeText?: string;
     parsedSummary?: string;
     analysisResult?: ResumeAnalysisResult;
+    uploadedAt?: string;
   },
   language?: InterviewLanguage,
 ): ApplicationRecord {

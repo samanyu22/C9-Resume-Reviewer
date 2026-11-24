@@ -73,16 +73,19 @@ function LoginPage() {
         } else {
           // If direct RPC couldn't resolve, try serverLoginFn as fallback
           try {
-            const res = await serverLoginFn({
+            const res = (await serverLoginFn({
               data: {
                 identifier: trimmedId,
                 password,
               },
-            });
+            })) as {
+              success: boolean;
+              session?: { access_token: string; refresh_token: string };
+            };
 
             if (res.success && res.session) {
               const { data: sessionData, error: setSessionErr } = await supabase.auth.setSession(
-                res.session as { access_token: string; refresh_token: string },
+                res.session,
               );
 
               if (!setSessionErr && sessionData.user) {
